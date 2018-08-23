@@ -5,6 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
 # Runtime data
 pids
 *.pid
@@ -35,7 +36,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-
+./api/
 # Typescript v1 declaration files
 typings/
 
@@ -56,6 +57,7 @@ typings/
 
 # dotenv environment variables file
 .env
+nodemon.json
 
 # next.js build output
 .next
