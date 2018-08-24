@@ -5,6 +5,7 @@ const todoSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   description: {type: String, required: true},
   completed: {type: Number, required: true},
+  sessionId: {type: String},
   created: {
     type: Date,
     default: Date.now

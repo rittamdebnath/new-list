@@ -28,7 +28,8 @@
     "morgan": "^1.9.0",
     "nodemon": "^1.18.3",
     "npm-update": "^2.1.0",
-    "passport": "^0.4.0"
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0"
   },
   "devDependencies": {}
 }
