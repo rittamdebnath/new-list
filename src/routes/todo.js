@@ -9,7 +9,8 @@ router.post('/add', (req, res, next) => {
   const todo = new Todo({
     _id: mongoose.Types.ObjectId(),
     description: req.body.description,
-    completed: req.body.completed
+    completed: req.body.completed,
+    sessionId: req.sessionID
   })
   todo.save()
     .then(result => {
@@ -23,7 +24,9 @@ router.post('/add', (req, res, next) => {
 })
 
 router.get('/list', (req, res, next) => {
-  Todo.find()
+  Todo.find({
+    sessionId: req.sessionID
+  })
     .select('_id description completed')
     .exec()
     .then((todo) => {

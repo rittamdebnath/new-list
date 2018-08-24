@@ -3,6 +3,8 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
+const session = require('express-session')
+const mongoStore = require('connect-mongo')(session);
 
 //routes
 const todoRoutes = require('./routes/todo')
@@ -10,21 +12,34 @@ const todoRoutes = require('./routes/todo')
 //middlewares
 
 
-mongoose.connect('mongodb://node-shop:' + process.env.MONGO_ATLAS_PWD + '@cluster0-shard-00-00-zweme.mongodb.net:27017,cluster0-shard-00-01-zweme.mongodb.net:27017,cluster0-shard-00-02-zweme.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true', {
+mongoose.connect('mongodb://node-shop:' + process.env.MONGO_ATLAS_PWD + '@cluster0-shard-00-00-zweme.mongodb.net:27017,cluster0-shard-00-01-zweme.mongodb.net:27017,cluster0-shard-00-02-zweme.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=false', {
     useNewUrlParser: true
 }).then(() => console.log('Mongodb connected and running..')).catch((e) => console.error(e));
   
 
 mongoose.Promise = global.Promise;
-// app.set('public',__dirname + '/public');
 app.use(express.static(__dirname+'/public'))
 app.use(morgan('dev'));
+
+
+app.use(session({
+    secret: 'kkdjslaf',
+    resave: true,
+    saveUninitialized: true,
+    store: new mongoStore({
+        mongooseConnection: mongoose.connection,
+        autoRemove: 'native',
+        // ttl: 14*24*60*60
+    })
+}))
+
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+
 app.use(bodyParser.json());
-
-
 
 
 // to prevent CORS error
